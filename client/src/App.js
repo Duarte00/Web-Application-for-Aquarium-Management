@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Axios from 'axios';
 
 function App() {
@@ -13,6 +13,8 @@ function App() {
 
   const [loginStatus, setLoginStatus] = useState('')
 
+  Axios.defaults.withCredentials = true;
+  
   const register = () => {
     Axios.post('http://localhost:3001/register', {
       username: usernameReg, 
@@ -36,6 +38,14 @@ function App() {
     });
   };
 
+  useEffect( ()=> {
+    Axios.get("http://localhost:3001/login").then((respose) => {
+      if (respose.data.loggedIn == true){
+        setLoginStatus(respose.data.user[0].username);
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
 
@@ -47,7 +57,7 @@ function App() {
               }} 
             /><br></br>
             <label>password</label><br></br>
-            <input type="text" 
+            <input type="password" 
             onChange={(e)=> {
               setpasswordReg(e.target.value)
               }} /><br></br>
