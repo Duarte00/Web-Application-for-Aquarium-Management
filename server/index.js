@@ -10,6 +10,8 @@ const session = require('express-session');
 const bcrypt = require("bcrypt");
 const saltRouts = 10;
 
+const jwt= require('jsonwebtoken');
+
 dotenv.config({path: './.env'});
 
 const app = express();
@@ -24,7 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(session({
-    key: "userID",
+    key: "userId",
     secret: "secretSssion",
     resave: false,
     saveUninittialized: false,
@@ -37,8 +39,10 @@ const db = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
-    database: process.env.DATABASE
+    database: process.env.DATABASE,
 });
+
+const  jwtSecret = process.env.JWTSECRET;
 
 db.connect( (error) => {
     if(error) {
@@ -68,6 +72,26 @@ app.post('/register', (req,res) =>{
     
 });
 
+const verifyJWT =(req, res, next) => {
+    const token = req.headers["x-access-token"]
+    if (!token) {
+        res.send("Token needed");
+    }else{
+        jwt.verify(token, jwtSecret, (err, decoded) =>{
+            if(err){
+                res.json({auth: false, message: "Failed authentication"});
+            }else{
+                req.userId = decoded.id;
+                next();
+            }
+        })
+    }
+}
+
+app.get('/isUserAuth', verifyJWT,(req,res) =>{
+    res.send("You´re authenticaded");
+});
+
 app.get("/login", (req, res) => {
     if(req.session.user){
         res.send({loggedIn: true, user: req.session.user});
@@ -92,15 +116,19 @@ app.post('/login', (req,res) => {
                 if (result.length > 0){
                     bcrypt.compare(password, result[0].password, (error, response) => {
                         if(response){
+                            const id = result[0].id;
+                            const token = jwt.sign({id}, jwtSecret, {
+                                expiresIn: 300,
+                            })
                             req.session.user = result;
-                            console.log(req.session.user);
-                            res.send(result);
+
+                            res.json({auth: true, token: token, rrslt: result});
                         }else{
-                            res.send({ message: "Wrong credencials"});
+                            res.json({auth: false, mesage: "wrong credentials"});
                         }
                     });
                     }else{
-                        res.send({ message: "Account doesn´t exist"});
+                        res.json({auth: false, mesage: "account doens´t exist"});
                     }
                 }
     );
