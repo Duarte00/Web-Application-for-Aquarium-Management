@@ -67,6 +67,7 @@ app.post('/register', (req,res) =>{
             [username, hash, email], 
             (err, result) => {
                 if (err) throw err;
+                res.send({ack:1})
         })
     })
     
