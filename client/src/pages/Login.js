@@ -1,28 +1,30 @@
 import React, {useEffect, useState} from "react";
 import Axios from 'axios';
-import{Link} from "react-router-dom";
+import{Link , useNavigate} from "react-router-dom";
 
 function Login() {
-    
 
     const [usernameLogin, setUsernameLogin] = useState('')
     const [passwordLogin, setPassworLongin] = useState('')
 
     const [loginStatus, setLoginStatus] = useState(false)
 
-
     Axios.defaults.withCredentials = true;
 
-    const login = () => {
+    let navigate = useNavigate();
+
+    const login = (e) => {
+      e.preventDefault();
       Axios.post('http://localhost:3001/login', {
         username: usernameLogin, 
         password: passwordLogin
       }).then((respose) => {
-        if (!respose.data.auth){
+        if (respose.data.auth==false){
           setLoginStatus(false);
         }else{
           localStorage.setItem("token", respose.data.token)
           setLoginStatus(true);
+          navigate('../profile');
         }
       });
     };
@@ -51,7 +53,7 @@ function Login() {
   return (  
     <div>
 
-      <Link to="./protectedRoute" state={{loginStatus: loginStatus}} className="link"/>
+      <Link to="./protectedRoute" state={{loginStatus: loginStatus}}>gfffhj</Link>
 
         <div className="wrapper">
             <div className="text-center mt-4 name"> Login </div>
@@ -67,9 +69,9 @@ function Login() {
               onChange={(e)=> {
                 setPassworLongin(e.target.value)
                 }}/> </div> 
-                <button className="btn mt-3"  onClick={login} >Login</button>
+                <button className="btn mt-3"  onClick={login }>Login</button>
             </form>
-            <div className="text-center fs-6" > <a id="regiterLogin" >Forget password?</a> or 
+            <div className="text-center fs-6" >
             <a id="regiterLogin" href="/register">Register</a> 
             </div>
         </div>

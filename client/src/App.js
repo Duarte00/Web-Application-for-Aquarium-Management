@@ -8,7 +8,6 @@ import Profile from './pages/Profile'
 import ErrorPage from './pages/ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectedRoute from './protectedRoute';
-import login from './pages/Login';
 
 /*      <Route exact path='/' element={<ProtectedRoute/>}>
           <Route exact path='/profile' element={<Profile/>}/>

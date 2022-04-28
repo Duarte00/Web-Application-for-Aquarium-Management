@@ -1,16 +1,16 @@
 import React from 'react'
-import {Route, Navigate, useLocation} from "react-router-dom";
-import {Outlet} from "react-router";
-import Home from './pages/Home';
+import {Route, Navigate, useLocation, Outlet} from "react-router-dom";
 
-const ProtectedRoute = () => {
+function protectedRoute(props) {
 
     const location = useLocation();
 
-    const loginStatus = location.state?.loginStatus;
+    /*ir buscar o tken de outra forma para impedir a manipulação do mesmo*/
+
+    const loginStatus = localStorage.getItem("token");
     
-    return loginStatus ? <Outlet /> : <Home />
+    return loginStatus ? <Outlet /> : <Navigate to="/"/>
 }
 
-export default ProtectedRoute;
+export default protectedRoute;
 
