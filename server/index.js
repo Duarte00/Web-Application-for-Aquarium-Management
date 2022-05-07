@@ -106,7 +106,6 @@ app.post('/login', (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
     
-
     db.query(
         "SELECT * FROM users WHERE username = ?;", 
         username, 
@@ -123,7 +122,7 @@ app.post('/login', (req,res) => {
                             })
                             req.session.user = result;
 
-                            res.json({auth: true, token: token, rrslt: result});
+                            res.json({auth: true, token: token, rrslt: result[0]});
                         }else{
                             res.json({auth: false, mesage: "wrong credentials"});
                         }
@@ -134,6 +133,11 @@ app.post('/login', (req,res) => {
                 }
     );
 });
+
+app.get('/profile', (req,res) => {
+    const id = req.respose.data.rrslt.id;
+    res.json(id);
+})
 
 
 app.listen(3001, () => {

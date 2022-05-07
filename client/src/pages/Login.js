@@ -23,8 +23,10 @@ function Login() {
           setLoginStatus(false);
         }else{
           localStorage.setItem("token", respose.data.token)
+          localStorage.setItem("id", respose.data.rrslt.id)
           setLoginStatus(true);
           navigate('../profile');
+          /*console.log(respose);*/
         }
       });
     };
@@ -53,7 +55,7 @@ function Login() {
   return (  
     <div>
 
-      <Link to="./protectedRoute" state={{loginStatus: loginStatus}}>gfffhj</Link>
+      <Link to="./protectedRoute" state={{loginStatus: loginStatus}}></Link>
 
         <div className="wrapper">
             <div className="text-center mt-4 name"> Login </div>

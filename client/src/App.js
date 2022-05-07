@@ -8,23 +8,25 @@ import Profile from './pages/Profile'
 import ErrorPage from './pages/ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectedRoute from './protectedRoute';
+import Navbar from './pages/Topnavbar';
 
-/*      <Route exact path='/' element={<ProtectedRoute/>}>
-          <Route exact path='/profile' element={<Profile/>}/>
-        </Route>
-        */ 
 function App() {
 
   return (
 
     <Router> 
       <Routes>
-        <Route path='/' element={<Home />}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/register' element={<Register />}/>
 
-        <Route element={<ProtectedRoute/>}>
-          <Route path='/profile' element={<Profile />} />
+        <Route element={<Navbar />}>
+
+          <Route path='/' element={<Home />}/>
+
+          <Route element={<ProtectedRoute/>}>
+            <Route path='/profile' element={<Profile />} />
+          </Route>
+
         </Route>
 
         <Route path='*' element={<ErrorPage />}/>
