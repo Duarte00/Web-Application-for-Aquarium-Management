@@ -8,31 +8,32 @@ import Profile from './pages/Profile'
 import ErrorPage from './pages/ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectedRoute from './protectedRoute';
-import Navbar from './pages/Topnavbar';
+import Topnavbar from './pages/Topnavbar';
 
 function App() {
 
   return (
+<div>
+
+
 
     <Router> 
-      <Routes>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/>
+    <Routes>
+      <Route path='/login' element={<Login />}/>
+      <Route path='/register' element={<Register />}/>
 
-        <Route element={<Navbar />}>
+        <Route path='/' element={<Home />}/>
 
-          <Route path='/' element={<Home />}/>
-
-          <Route element={<ProtectedRoute/>}>
-            <Route path='/profile' element={<Profile />} />
-          </Route>
-
+        <Route element={<ProtectedRoute/>}>
+          <Route path='/profile' element={<Profile />} />
         </Route>
 
-        <Route path='*' element={<ErrorPage />}/>
-      </Routes>
-      <div>footer</div>
-    </Router>
+
+      <Route path='*' element={<ErrorPage />}/>
+    </Routes>
+  </Router>
+  <footer className='footer'>footer</footer>
+  </div>
   );
 }
 

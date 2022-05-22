@@ -111,3 +111,63 @@ body {
 }
 
 /* Login page END*/
+
+/* Profile page*/
+
+.button-24 {
+    position: absolute;
+    left:40px;
+    top:100px;
+    background: #6CD4CA;
+    border: 1px solid #6CD4CA;
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size:80px;
+    font-weight: 100;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 49px 35px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+  .button-24:hover,
+  .button-24:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #6CD4CA;
+  }
+  
+  .button-24:active {
+    padding: 36px 42px;
+  }
+
+  #plusSign{
+      size-:40rem;
+  }
+/* Profile page END*/
+
+/* Footer*/
+.footer{
+    
+    color:#fff;
+    background-color: #6CD4CA;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem; 
+}
+
+/* Footer*/

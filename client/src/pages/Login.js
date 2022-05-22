@@ -22,8 +22,6 @@ function Login() {
         if (respose.data.auth==false){
           setLoginStatus(false);
         }else{
-          localStorage.setItem("token", respose.data.token)
-          localStorage.setItem("id", respose.data.rrslt.id)
           setLoginStatus(true);
           navigate('../profile');
           /*console.log(respose);*/
@@ -31,24 +29,6 @@ function Login() {
       });
     };
 
-    const userAuthenticate = () => {
-      Axios.get('http://localhost:3001/isUserAuth', {
-        headers: {
-        "x-access-token": localStorage.getItem("token")
-        },
-      }).then((respose => {
-        console.log(respose);
-      })) 
-    }
-
-    
-    useEffect( ()=> {
-      Axios.get("http://localhost:3001/login").then((respose) => {
-        if (respose.data.loggedIn === true){
-          setLoginStatus(respose.data.user[0].username);
-        }
-      });
-    }, []);
     
     
 
@@ -77,10 +57,6 @@ function Login() {
             <a id="regiterLogin" href="/register">Register</a> 
             </div>
         </div>
-          
-          {loginStatus && (
-            <button onClick={userAuthenticate}> Check of Authenticated </button>
-          )}
                  
       </div>
   )
