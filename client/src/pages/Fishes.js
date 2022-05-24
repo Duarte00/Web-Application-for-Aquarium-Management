@@ -1,40 +1,36 @@
 import React,{useState,useEffect} from 'react'
-import{useNavigate} from "react-router-dom";
+import{useNavigate,useParams} from "react-router-dom";
 import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
-import Axios from 'axios';
-import Aquarium from '../components/aquarium';
+import Fish from '../components/fish';
+import  Axios  from 'axios';
+function Fishes() {
+    let navigate = useNavigate();
+    const {ida}=useParams();
+    const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
 
-function Profile() {
-  let navigate = useNavigate();
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const [aquariumnameReg, setAquariumnameReg] = useState('')
-  const [dimensionReg, setdimensiondReg] = useState('')
-  const [aquariumImg, setAquariumImg] = useState(null);
-
-  const [userAquariums,setUserAquariums] =useState([]);
-
-
-  const getUserAquariums=()=>{
-    Axios.get('http://localhost:3001/userAquariums',{
+const [fishnameReg, setFishnameReg] = useState('')
+const [fishQuantReg, setFshReg] = useState('')
+const [fishImg, setFishImg] = useState(null);
+const [aquaFishes,setAquaFishes] =useState([]);
+const getFishes=()=>{
+    Axios.get('http://localhost:3001/aquariumFish?ida='+ida,{
   withCredentials: true,
   baseURL: "http://localhost:3001/",
 }).then((res) => {
-      setUserAquariums(res.data);
+    setAquaFishes(res.data);
       console.log(res.data)
     })
   }
   
-  const aquarium = () => {
+  const fishes = () => {
     const formData = new FormData();
-      formData.append("name",  aquariumnameReg);
-      formData.append("dimension",dimensionReg);
-      formData.append("uploaded_file",aquariumImg);
-    Axios.post('http://localhost:3001/profile', formData,{
+      formData.append("species",  fishnameReg);
+      formData.append("quantityF",fishQuantReg);
+      formData.append("IDA",ida);
+      formData.append("uploaded_file",fishImg);
+    Axios.post('http://localhost:3001/fishes', formData,{
       withCredentials: true,
       baseURL: "http://localhost:3001/",
     }).then((respose) => {
@@ -43,35 +39,38 @@ function Profile() {
     })
   }
 
-
   useEffect(()=>{
-    getUserAquariums();
+      console.log(ida)
+    getFishes();
   },[])
+
+
   return (
-<>
-< Modal show={show} onHide={handleClose}>
+      <>
+
+    < Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicionar Aquário</Modal.Title>
+          <Modal.Title>Adicionar Peixe</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nome</Form.Label>
+              <Form.Label>Nome/Espécie</Form.Label>
               <Form.Control
                 type="name"
                 autoFocus 
                 onChange={(e)=> {
-                setAquariumnameReg(e.target.value)
+                    setFishnameReg(e.target.value)
                 }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Dimensão</Form.Label>
+              <Form.Label>Quantidade</Form.Label>
               <Form.Control
                 type="numerical"
                 autoFocus
                 onChange={(e)=> {
-                  setdimensiondReg(e.target.value)
+                    setFshReg(e.target.value)
                   }}
               />
             </Form.Group>
@@ -80,7 +79,7 @@ function Profile() {
               <Form.Control
                 type="file"
                 name="uploaded_file"
-                onChange={ (e)=> setAquariumImg(e.target.files[0])}
+                onChange={ (e)=> setFishImg(e.target.files[0])}
               />
             </Form.Group>
           </Form>
@@ -89,21 +88,16 @@ function Profile() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={aquarium}>
+          <Button variant="primary" onClick={fishes}>
             Salvar
           </Button>
         </Modal.Footer>
       </Modal>
+      
 
     <div>
-      
-  
-      
-      
-      </div>
-
       <Container>
-        <Row><Col><Navbar bg="dark" variant="dark">
+      <Row><Col><Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="/">Fish20</Navbar.Brand>
           <Button className="buttonHomepage" onClick={ () => {
@@ -112,24 +106,15 @@ function Profile() {
                     Login</Button>
         </Container>
       </Navbar></Col></Row>
-        <Row><Col><Button className='rounded' onClick={handleShow}>+</Button></Col></Row>
-        <Row>
-        {userAquariums.length>0  ? (
-              userAquariums.map((uf, index) => (
-                <Col><Aquarium name={uf.name} id={uf.IDA}/></Col>
-              ))
-            ) : (
-              <h1>No Aquariums</h1>
-      )}
-        </Row>
+        <Row><Button className='rounded' onClick={handleShow}>+</Button><Col>
+      {aquaFishes.length>0 ?aquaFishes.map((uf, index) => (
+                <Col><Fish idf={uf.IDF}/></Col>
+              )) : (<h1>Loading...</h1>)}
+      </Col><Col></Col><Col></Col></Row>
       </Container>
-
-
-      
-      
-    
-    </>
+      </div>
+      </>
   )
 }
 
-export default Profile;
+export default Fishes;

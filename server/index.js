@@ -175,6 +175,8 @@ app.post('/login', (req,res) => {
               }
   );
 });
+
+/* Profile and aquarium API*/ 
 app.post('/profile', upload.single("uploaded_file"),verifyJWT, (req,res) =>{
   const name  = req.body.name;
   const dimension = req.body.dimension;
@@ -196,12 +198,10 @@ app.post('/profile', upload.single("uploaded_file"),verifyJWT, (req,res) =>{
           (err, result) => {
               if (err) throw err;
               res.send({ack:1})
-          })
-
-          
+          })   
   })
-
 })
+
 app.get("/aquaImgPreview", (req, res) => {
     const idAquario=req.query.aquaid;
     if(idAquario!=null){
@@ -235,6 +235,83 @@ app.get("/userAquariums", (req, res) => {
               res.send(result);
           })
       });
+
+      app.get("/userAquarium", (req, res) => {
+        const ida=req.query.ida;
+          db.query(
+              "SELECT nameImgA,extencionA,AquaInfo.IDA,AquaInfo.dimension,AquaInfo.name FROM imagea, (SELECT IDA,dimension,name FROM aquarium WHERE ida=?) as AquaInfo WHERE imagea.IDA=AquaInfo.IDA", 
+              ida, 
+              (err, result) => {
+                  if (err) {
+                      throw err;
+                  }
+                  res.send(result);
+              })
+          });
+      
+/* Profile and aquarium API END*/
+
+/* Fishes and aquarium API*/
+
+app.get("/aquariumFish", (req, res) => {
+
+    const ida= req.query.ida;
+    db.query(
+        "SELECT imagef.nameImgF,imagef.extencionF,FishInfo.IDF,FishInfo.species,FishInfo.quantityF FROM imagef, (SELECT IDF, species,quantityF FROM fish WHERE IDA=?) as FishInfo WHERE imagef.IDF=FishInfo.IDF", 
+        ida, 
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+            res.send(result);
+        })
+    });
+
+    app.post('/fishes', upload.single("uploaded_file"),verifyJWT, (req,res) =>{
+      const species  = req.body.species;
+      const quantityF = req.body.quantityF;
+      const ida= req.body.IDA;
+      console.log(req.session.user)
+      db.query(
+          "INSERT INTO fish (species, quantityF, ida) VALUES (?,?,?); Select LAST_INSERT_ID()", 
+          [species, quantityF, ida], 
+          (err, result) => {
+              if (err) throw err;
+              console.log(result[0].insertId);
+              const lastId = result[0].insertId;
+              const nameFileArray=req.file.filename.split(".");
+              const extention="."+nameFileArray[1]
+              const imgName =nameFileArray[0]
+              db.query("INSERT INTO imagef (IDF, extencionF, nameImgF) VALUES (?,?,?)",
+              [lastId,extention,imgName],
+              (err, result) => {
+                  if (err) throw err;
+                  res.send({ack:1})
+              })   
+      })
+    })
+
+    app.get("/fishImgPreview", (req, res) => {
+      const idFish=req.query.fishid;
+      if(idFish!=null){
+      db.query(
+          "SELECT nameImgF, extencionF FROM imagef WHERE IDF=?;", 
+          idFish, 
+          (err, result) => {
+              if (err) {
+                  throw err;
+              }
+              if(result.length>0){
+              const nomeFicheiroImagem=result[0].nameImgF+result[0].extencionF
+              res.sendFile(__dirname + "/uploads/" + nomeFicheiroImagem);
+              }
+              else{
+                  res.json({ack:0,message:"No fishes found!"})
+              }
+          })
+      }
+      });
+/* Fish and aquarium API END*/
 
 
 app.listen(3001, () => {
