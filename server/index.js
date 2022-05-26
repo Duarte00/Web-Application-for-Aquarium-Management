@@ -251,7 +251,7 @@ app.get("/userAquariums", (req, res) => {
       
 /* Profile and aquarium API END*/
 
-/* Fishes and aquarium API*/
+/* Fish  API*/
 
 app.get("/aquariumFish", (req, res) => {
 
@@ -311,7 +311,70 @@ app.get("/aquariumFish", (req, res) => {
           })
       }
       });
-/* Fish and aquarium API END*/
+/* Fish  API END*/
+
+/* Product  API*/
+
+app.get("/aquariumProduct", (req, res) => {
+
+    const ida= req.query.ida;
+    db.query(
+        "SELECT imagep.nameImgP,imagep.extencionP,ProductInfo.IDD,ProductInfo.typeD,ProductInfo.quantityD FROM imagep, (SELECT IDD, typeD,quantityD FROM products WHERE IDA=?) as ProductInfo WHERE imagep.IDD=ProductInfo.IDD", 
+        ida, 
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+            res.send(result);
+        })
+    });
+
+    app.post('/products', upload.single("uploaded_file"),verifyJWT, (req,res) =>{
+      const typeD  = req.body.typeD;
+      const quantityD = req.body.quantityD;
+      const ida= req.body.IDA;
+      console.log(req.session.user)
+      db.query(
+          "INSERT INTO products (typeD, quantityD, ida) VALUES (?,?,?); Select LAST_INSERT_ID()", 
+          [typeD, quantityD, ida], 
+          (err, result) => {
+              if (err) throw err;
+              console.log(result[0].insertId);
+              const lastId = result[0].insertId;
+              const nameFileArray=req.file.filename.split(".");
+              const extention="."+nameFileArray[1]
+              const imgName =nameFileArray[0]
+              db.query("INSERT INTO imagep (IDD, extencionP, nameImgP) VALUES (?,?,?)",
+              [lastId,extention,imgName],
+              (err, result) => {
+                  if (err) throw err;
+                  res.send({ack:1})
+              })   
+      })
+    })
+
+    app.get("/productImgPreview", (req, res) => {
+      const idProduct=req.query.productid;
+      if(idProduct!=null){
+      db.query(
+          "SELECT nameImgP, extencionP FROM imagep WHERE IDD=?;", 
+          idProduct, 
+          (err, result) => {
+              if (err) {
+                  throw err;
+              }
+              if(result.length>0){
+              const nomeFicheiroImagem=result[0].nameImgP+result[0].extencionP
+              res.sendFile(__dirname + "/uploads/" + nomeFicheiroImagem);
+              }
+              else{
+                  res.json({ack:0,message:"No products found!"})
+              }
+          })
+      }
+      });
+
+/* Product  API END*/
 
 
 app.listen(3001, () => {

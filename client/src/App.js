@@ -8,16 +8,14 @@ import Profile from './pages/Profile'
 import ErrorPage from './pages/ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProtectedRoute from './protectedRoute';
-import Topnavbar from './pages/Topnavbar';
 import AquariumInfo from './pages/AquariumInfo';
 import Fishes from './pages/Fishes';
+import Products from './pages/Products';
 
 function App() {
 
   return (
 <div>
-
-
 
     <Router> 
     <Routes>
@@ -30,6 +28,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/AquariumInfo/:ida' element={<AquariumInfo />} />
           <Route path='/AquariumInfo/:ida/fishes/' element={<Fishes />} />
+          <Route path='/AquariumInfo/:ida/products/' element={<Products />} />
         </Route>
 
 

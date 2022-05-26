@@ -101,19 +101,20 @@ function Profile() {
       
       
       </div>
-
-      <Container>
-        <Row><Col><Navbar bg="dark" variant="dark">
+      <Row><Col><Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="/">Fish20</Navbar.Brand>
-          <Button className="buttonHomepage" onClick={ () => {
+          <button  className="buttonNavBar" onClick={ () => {
                     navigate('/login');
                 }}>
-                    Login</Button>
+                    Login</button>
         </Container>
       </Navbar></Col></Row>
-        <Row><Col><Button className='rounded' onClick={handleShow}>+</Button></Col></Row>
+      
+      <Container>
+        
         <Row>
+        <Col><button className='button-24' onClick={handleShow}>+</button></Col>
         {userAquariums.length>0  ? (
               userAquariums.map((uf, index) => (
                 <Col><Aquarium name={uf.name} id={uf.IDA}/></Col>
