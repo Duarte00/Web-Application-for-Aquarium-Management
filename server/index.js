@@ -376,6 +376,46 @@ app.get("/aquariumProduct", (req, res) => {
 
 /* Product  API END*/
 
+/* Parameter API*/
+app.get("/aquariumParameter", (req, res) => {
+  const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH"]
+  const ida= req.query.ida;
+  const namep= namePs[req.query.param];
+  
+  db.query(
+      "SELECT IDP, nameP, quantityP, DATE_FORMAT(dateP, '%d-%m') as datep FROM parameters WHERE IDA=? AND nameP=?", 
+      [ida,namep], 
+      (err, result) => {
+          if (err) {
+              throw err;  
+          }
+          res.send(result);
+      })
+  });
+
+  app.post('/parameters',verifyJWT, (req,res) =>{
+    console.log(req.body);
+    const quantityP  = req.body.quantityP;
+    const ida= req.body.IDA;
+    const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH"]
+    const nameP = namePs[req.body.nameP];
+    console.log(req.session.user)
+    db.query(
+        "INSERT INTO parameters (nameP,quantityP, dateP, ida) VALUES (?,?,CURDATE(),?); Select LAST_INSERT_ID()", 
+        [nameP, quantityP, ida], 
+        (err, result) => {
+          if (err) {
+              throw err;  
+          }
+          res.send({ack:1});
+      })
+    })
+
+      
+
+
+/* Parameter  API END*/
+
 
 app.listen(3001, () => {
   console.log("Server started on port 3001");

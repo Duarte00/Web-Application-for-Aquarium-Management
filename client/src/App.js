@@ -11,6 +11,7 @@ import ProtectedRoute from './protectedRoute';
 import AquariumInfo from './pages/AquariumInfo';
 import Fishes from './pages/Fishes';
 import Products from './pages/Products';
+import Parameters from './pages/Parameters'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path='/AquariumInfo/:ida' element={<AquariumInfo />} />
           <Route path='/AquariumInfo/:ida/fishes/' element={<Fishes />} />
           <Route path='/AquariumInfo/:ida/products/' element={<Products />} />
+          <Route path='/AquariumInfo/:ida/parameters/' element={<Parameters />} />
         </Route>
 
 

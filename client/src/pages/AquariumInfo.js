@@ -40,8 +40,10 @@ function AquariumInfo() {
       {aquarium!==null ?aquarium.map((uf, index) => (
                 <Col><Aquarium name={uf.name} id={uf.IDA}/></Col>
               )) : <h1>Loading...</h1>}
-      </Col><Col></Col><Col><Button onClick={()=>navigate("fishes")} >adicionar peixes +</Button>
-      <Button onClick={()=>navigate("products")} >adicionar produtos +</Button></Col></Row>
+      </Col><Col></Col><Col>
+      <Button onClick={()=>navigate("fishes")} >adicionar peixes +</Button>
+      <Button onClick={()=>navigate("products")} >adicionar produtos +</Button>
+      <Button onClick={()=>navigate("parameters")} >adicionar parametros +</Button></Col></Row>
       </Container>
       </div>
   )
