@@ -104,6 +104,9 @@ function Profile() {
       <Row><Col><Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="/">Fish20</Navbar.Brand>
+        <button  className='buttonAlerts' onClick={()=>navigate("/AquariumInfo/alerts")}>
+          <img src="img/1.png"></img>
+        </button>
           <button  className="buttonNavBar" onClick={ () => {
                     navigate('/login');
                 }}>

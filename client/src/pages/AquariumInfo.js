@@ -27,7 +27,8 @@ function AquariumInfo() {
   return (
     <div>
       <Container>
-      <Row><Col><Navbar bg="dark" variant="dark">
+      <Row><Col>
+      <Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="/">Fish20</Navbar.Brand>
           <Button className="buttonHomepage" onClick={ () => {

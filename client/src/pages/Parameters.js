@@ -31,14 +31,12 @@ function Parameters() {
     
     const changeParameter = (nr) =>{
       setcurrentParameter(nr);
-      Axios.get('http://localhost:3001/aquariumParameter?ida='+ida+"&param="+currentParameter,{
+      Axios.get('http://localhost:3001/aquariumParameter?ida='+ida+"&param="+nr,{
         withCredentials: true,
       }).then((res) => {
         setData(res.data)
           })
       }
-
-    
 
       const minMaxes = [
         {

@@ -316,7 +316,6 @@ app.get("/aquariumFish", (req, res) => {
 /* Product  API*/
 
 app.get("/aquariumProduct", (req, res) => {
-
     const ida= req.query.ida;
     db.query(
         "SELECT imagep.nameImgP,imagep.extencionP,ProductInfo.IDD,ProductInfo.typeD,ProductInfo.quantityD FROM imagep, (SELECT IDD, typeD,quantityD FROM products WHERE IDA=?) as ProductInfo WHERE imagep.IDD=ProductInfo.IDD", 
@@ -381,7 +380,6 @@ app.get("/aquariumParameter", (req, res) => {
   const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH"]
   const ida= req.query.ida;
   const namep= namePs[req.query.param];
-  
   db.query(
       "SELECT IDP, nameP, quantityP, DATE_FORMAT(dateP, '%d-%m') as datep FROM parameters WHERE IDA=? AND nameP=?", 
       [ida,namep], 
@@ -412,10 +410,22 @@ app.get("/aquariumParameter", (req, res) => {
     })
 
       
-
-
 /* Parameter  API END*/
 
+/* Alert  API*/
+
+app.get("/alerts", (req, res) => {
+  db.query(
+      "SELECT aquaNames.name, dateA, typeA, alert.IDA FROM alert , (SELECT IDA, name FROM aquarium) as aquaNames WHERE alert.IDA=aquaNames.IDA LIMIT 10", 
+      (err, result) => {
+          if (err) {
+              throw err;  
+          }
+          res.send(result);
+      })
+  }); 
+
+/* Alert  API END*/
 
 app.listen(3001, () => {
   console.log("Server started on port 3001");

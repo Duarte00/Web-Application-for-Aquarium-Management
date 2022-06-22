@@ -12,6 +12,7 @@ import AquariumInfo from './pages/AquariumInfo';
 import Fishes from './pages/Fishes';
 import Products from './pages/Products';
 import Parameters from './pages/Parameters'
+import Alerts from './pages/Alerts';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/AquariumInfo/:ida/fishes/' element={<Fishes />} />
           <Route path='/AquariumInfo/:ida/products/' element={<Products />} />
           <Route path='/AquariumInfo/:ida/parameters/' element={<Parameters />} />
+          <Route path='/AquariumInfo/alerts/' element={<Alerts />} />
         </Route>
 
 
