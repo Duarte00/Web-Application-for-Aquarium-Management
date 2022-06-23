@@ -45,7 +45,7 @@ function Alerts() {
         <Col>
         {aquaAlerts.length>0 ?aquaAlerts.map((uf, index) => (
             <ListGroup>
-                <Alert typeA={uf.typeA} name={uf.name} date={uf.dateA}/>
+                <Alert name={uf.name} date={uf.dateA} typeA={uf.typeA}/>
             </ListGroup>
             )) : (<h1>Loading...</h1>)}
         </Col>
