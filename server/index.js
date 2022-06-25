@@ -248,13 +248,26 @@ app.get("/userAquariums", (req, res) => {
                   res.send(result);
               })
           });
+
+          app.get("/userAquariumDelete", (req, res) => {
+            console.log(req.query.ida)
+            const ida=req.query.ida;
+              db.query(
+                  "DELETE aquarium, alert, fish, imagea, products, parameters FROM aquarium LEFT JOIN alert on aquarium.ida=alert.ida LEFT JOIN fish on aquarium.ida=fish.ida LEFT JOIN imagea on aquarium.ida=imagea.ida LEFT JOIN products on aquarium.ida=products.ida LEFT JOIN parameters on aquarium.ida=parameters.ida WHERE aquarium.ida=?;", 
+                  ida, 
+                  (err, result) => {
+                      if (err) {
+                          throw err;
+                      }
+                      res.send(result);
+                  })
+              });
       
 /* Profile and aquarium API END*/
 
 /* Fish  API*/
 
 app.get("/aquariumFish", (req, res) => {
-
     const ida= req.query.ida;
     db.query(
         "SELECT imagef.nameImgF,imagef.extencionF,FishInfo.IDF,FishInfo.species,FishInfo.quantityF FROM imagef, (SELECT IDF, species,quantityF FROM fish WHERE IDA=?) as FishInfo WHERE imagef.IDF=FishInfo.IDF", 
@@ -311,6 +324,19 @@ app.get("/aquariumFish", (req, res) => {
           })
       }
       });
+
+      app.get("/fishesDelete", (req, res) => {
+        const idFish=req.query.fishid;
+          db.query(
+              "DELETE  fish, imagef FROM fish LEFT JOIN imagef on fish.IDF=imagef.IDF WHERE fish.IDF=?;", 
+              idFish, 
+              (err, result) => {
+                  if (err) {
+                      throw err;
+                  }
+                  res.send(result);
+              })
+          });
 /* Fish  API END*/
 
 /* Product  API*/
@@ -373,6 +399,19 @@ app.get("/aquariumProduct", (req, res) => {
       }
       });
 
+      app.get("/productDelete", (req, res) => {
+        const idProduct=req.query.productid;
+          db.query(
+              "DELETE  products, imagep FROM products LEFT JOIN imagep on products.IDD=imagep.IDD WHERE products.IDD=?;", 
+              idProduct, 
+              (err, result) => {
+                  if (err) {
+                      throw err;
+                  }
+                  res.send(result);
+              })
+          });
+
 /* Product  API END*/
 
 /* Parameter API*/
@@ -416,7 +455,7 @@ app.get("/aquariumParameter", (req, res) => {
 
 app.get("/alerts", (req, res) => {
   db.query(
-      "SELECT aquaNames.name, dateA, typeA, alert.IDA FROM alert , (SELECT IDA, name FROM aquarium) as aquaNames WHERE alert.IDA=aquaNames.IDA LIMIT 10", 
+      "SELECT aquaNames.name, dateA, typeA, alert.IDA FROM alert , (SELECT IDA, name FROM aquarium) as aquaNames WHERE alert.IDA=aquaNames.IDA ORDER BY dateA DESC  ", 
       (err, result) => {
           if (err) {
               throw err;  

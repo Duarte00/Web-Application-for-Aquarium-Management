@@ -37,6 +37,7 @@ const getProducts=()=>{
     }).then((respose) => {
       console.log(respose);
       handleClose();
+      window.location.reload(false);
     })
   }
 

@@ -7,13 +7,13 @@ function Fishes() {
     let navigate = useNavigate();
     const {ida}=useParams();
     const [show, setShow] = useState(false);
-const handleClose = () => setShow(false);
-const handleShow = () => setShow(true);
-
-const [fishnameReg, setFishnameReg] = useState('')
-const [fishQuantReg, setFshReg] = useState('')
-const [fishImg, setFishImg] = useState(null);
-const [aquaFishes,setAquaFishes] =useState([]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [fishnameReg, setFishnameReg] = useState('')
+    const [fishQuantReg, setFshReg] = useState('')
+    const [fishImg, setFishImg] = useState(null);
+    const [aquaFishes,setAquaFishes] =useState([]);
+   
 const getFishes=()=>{
     Axios.get('http://localhost:3001/aquariumFish?ida='+ida,{
   withCredentials: true,
@@ -36,8 +36,10 @@ const getFishes=()=>{
     }).then((respose) => {
       console.log(respose);
       handleClose();
+      window.location.reload(false);
     })
   }
+
 
   useEffect(()=>{
       console.log(ida)
@@ -93,7 +95,7 @@ const getFishes=()=>{
           </Button>
         </Modal.Footer>
       </Modal>
-      
+
 
     <div>
       <Container>
@@ -108,7 +110,7 @@ const getFishes=()=>{
       </Navbar></Col></Row>
         <Row><Button className='rounded' onClick={handleShow}>+</Button><Col>
       {aquaFishes.length>0 ?aquaFishes.map((uf, index) => (
-                <Col><Fish idf={uf.IDF}/></Col>
+                <Col><Fish idf={uf.IDF} name={uf.name}/></Col>
               )) : (<h1>Loading...</h1>)}
       </Col><Col></Col><Col></Col></Row>
       </Container>

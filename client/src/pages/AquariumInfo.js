@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import{useNavigate,useParams} from "react-router-dom";
-import { Container,Row,Col, Navbar, Button } from 'react-bootstrap';
+import { Container,Row,Col, Navbar, Button, Modal } from 'react-bootstrap';
 import Aquarium from '../components/aquarium';
 import  Axios  from 'axios';
 
@@ -9,6 +9,8 @@ function AquariumInfo() {
   const {ida} = useParams();
   const [show, setShow] = useState(false);
   const [aquarium,setAquarium] =useState([]);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const getAquarium=()=>{
     Axios.get('http://localhost:3001/userAquarium?ida='+ida,{
   withCredentials: true,
@@ -18,6 +20,18 @@ function AquariumInfo() {
       console.log(res.data[0])
     })
   }
+
+  const deleteAquariums=()=>{
+    Axios.get('http://localhost:3001/userAquariumDelete?ida='+ida,{
+  withCredentials: true,
+  baseURL: "http://localhost:3001/",
+  }).then((respose) => {
+    console.log(respose);
+    handleClose();
+    navigate('/profile');
+  })
+}
+
   useEffect(()=>{
     getAquarium();
   },[])
@@ -25,6 +39,21 @@ function AquariumInfo() {
   const [userAquariums,setUserAquariums] =useState([]);
 
   return (
+    <>
+< Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Apagar aquário?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Button variant="secondary" onClick={handleClose}>
+            NÃO
+          </Button>
+          <Button variant="primary" onClick={deleteAquariums}>
+            Sim
+          </Button>
+          </Modal.Body>
+      </Modal>
+
     <div>
       <Container>
       <Row><Col>
@@ -39,7 +68,7 @@ function AquariumInfo() {
       </Navbar></Col></Row>
         <Row><Col>
       {aquarium!==null ?aquarium.map((uf, index) => (
-                <Col><Aquarium name={uf.name} id={uf.IDA}/></Col>
+                <Col><Button onClick={handleShow}>-</Button><Aquarium name={uf.name} id={uf.IDA}/></Col>
               )) : <h1>Loading...</h1>}
       </Col><Col></Col><Col>
       <Button onClick={()=>navigate("fishes")} >adicionar peixes +</Button>
@@ -47,6 +76,7 @@ function AquariumInfo() {
       <Button onClick={()=>navigate("parameters")} >adicionar parametros +</Button></Col></Row>
       </Container>
       </div>
+      </>
   )
 }
 
