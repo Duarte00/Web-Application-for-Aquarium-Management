@@ -13,6 +13,8 @@ import Fishes from './pages/Fishes';
 import Products from './pages/Products';
 import Parameters from './pages/Parameters'
 import Alerts from './pages/Alerts';
+import Cycle from './pages/Cycle';
+import Diseases from './pages/Diseases';
 
 function App() {
 
@@ -34,12 +36,11 @@ function App() {
           <Route path='/AquariumInfo/:ida/parameters/' element={<Parameters />} />
           <Route path='/AquariumInfo/alerts/' element={<Alerts />} />
         </Route>
-
-
-      <Route path='*' element={<ErrorPage />}/>
+        <Route path='*' element={<ErrorPage />}/>
+        <Route path='/cycle' element={<Cycle/>} />
+        <Route path='/diseases' element={<Diseases/>} />
     </Routes>
   </Router>
-  <footer className='footer'>footer</footer>
   </div>
   );
 }

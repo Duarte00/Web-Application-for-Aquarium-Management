@@ -1,4 +1,4 @@
-import React,{useState, useEffect,} from 'react'
+import React,{useState, useEffect} from 'react'
 import { Navigate, Outlet} from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import Axios from "axios"

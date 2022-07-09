@@ -4,6 +4,9 @@ import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
 import Axios from 'axios';
 import Aquarium from '../components/aquarium';
 
+import NavBarOn from '../components/navBarOn';
+import Footer from '../components/footer';
+
 function Profile() {
   let navigate = useNavigate();
 
@@ -17,6 +20,8 @@ function Profile() {
   const [aquariumImg, setAquariumImg] = useState(null);
 
   const [userAquariums,setUserAquariums] =useState([]);
+
+ 
 
 
   const getUserAquariums=()=>{
@@ -61,16 +66,20 @@ function Profile() {
               <Form.Control
                 type="name"
                 autoFocus 
+                required
+                value={aquariumnameReg}
                 onChange={(e)=> {
                 setAquariumnameReg(e.target.value)
                 }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Dimensão</Form.Label>
+              <Form.Label>Dimensão em litros</Form.Label>
               <Form.Control
                 type="numerical"
                 autoFocus
+                required
+                value={dimensionReg}
                 onChange={(e)=> {
                   setdimensiondReg(e.target.value)
                   }}
@@ -81,6 +90,8 @@ function Profile() {
               <Form.Control
                 type="file"
                 name="uploaded_file"
+                required
+                file={aquariumImg}
                 onChange={ (e)=> setAquariumImg(e.target.files[0])}
               />
             </Form.Group>
@@ -90,7 +101,7 @@ function Profile() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={aquarium}>
+          <Button disabled={aquariumnameReg === "" || dimensionReg === "" || aquariumImg === null} variant="primary" onClick={aquarium}>
             Salvar
           </Button>
         </Modal.Footer>
@@ -102,37 +113,16 @@ function Profile() {
       
       
       </div>
-      <Row><Col><Navbar bg="dark" variant="dark">
-        <Container>
-        <Navbar.Brand href="/">Fish20</Navbar.Brand>
-        <button  className='buttonAlerts' onClick={()=>navigate("/AquariumInfo/alerts")}>
-          <img src="img/1.png"></img>
-        </button>
-          <button  className="buttonNavBar" onClick={ () => {
-                    navigate('/login');
-                }}>
-                    Login</button>
-        </Container>
-      </Navbar></Col></Row>
-      
-      <Container>
-        
-        <Row>
+      <NavBarOn/>   
+        <Row md={4}>
         <Col><button className='button-24' onClick={handleShow}>+</button></Col>
-        {userAquariums.length>0  ? (
-              userAquariums.map((uf, index) => (
-                <Col><Aquarium name={uf.name} id={uf.IDA}/></Col>
-              ))
-            ) : (
-              <h1>No Aquariums</h1>
-      )}
+          {userAquariums.length>0  ?userAquariums.map((uf, index) => (
+            <Col id="containerFish">
+                  <Aquarium dimension={uf.dimension} name={uf.name} id={uf.IDA}/>
+            </Col>
+                )) : (<h1>No Aquariums</h1>)}
         </Row>
-      </Container>
 
-
-      
-      
-    
     </>
   )
 }

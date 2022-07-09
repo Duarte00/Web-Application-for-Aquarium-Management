@@ -42,16 +42,20 @@ function Login() {
             <form className="p-3 mt-3">
                 <div className="form-field d-flex align-items-center"> <span className="far fa-user"></span> 
                 <input type="text" placeholder="Username..." 
+                required
+                file={usernameLogin}
               onChange={(e)=> {
                 setUsernameLogin(e.target.value)
                 }}/> </div>
 
                 <div className="form-field d-flex align-items-center"> <span className="fas fa-key"></span> 
                 <input type="password" placeholder="Password..."
+                required
+                file={passwordLogin}
               onChange={(e)=> {
                 setPassworLongin(e.target.value)
                 }}/> </div> 
-                <button className="btn mt-3"  onClick={login }>Login</button>
+                <button className="btn mt-3" disabled={usernameLogin === "" || passwordLogin === ""} onClick={login }>Login</button>
             </form>
             <div className="text-center fs-6" >
             <a id="regiterLogin" href="/register">Register</a> 

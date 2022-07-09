@@ -129,7 +129,7 @@ app.get("/login", (req, res) => {
 })
 
 app.get("/logout", (req, res) => {
-  res.status(202).clearCookie("access_token").send("token-cookie cleared");
+  res.status(202).clearCookie("access_token").clearCookie("uid").send("token-cookie cleared");
 });
 
 
@@ -222,6 +222,7 @@ app.get("/aquaImgPreview", (req, res) => {
         })
     }
     });
+    
 app.get("/userAquariums", (req, res) => {
     console.log(req.session.user)
       const id=req.session.user.id;
@@ -337,6 +338,19 @@ app.get("/aquariumFish", (req, res) => {
                   res.send(result);
               })
           });
+
+          app.get("/fishesSum", (req, res) => {
+            const ida= req.query.ida;
+              db.query(
+                  "SELECT sum(quantityF) as fishTotal FROM fish WHERE IDA=?", 
+                  ida, 
+                  (err, result) => {
+                      if (err) {
+                          throw err;
+                      }
+                      res.send(result[0]);
+                  })
+              });
 /* Fish  API END*/
 
 /* Product  API*/
@@ -416,7 +430,7 @@ app.get("/aquariumProduct", (req, res) => {
 
 /* Parameter API*/
 app.get("/aquariumParameter", (req, res) => {
-  const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH"]
+  const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH","Temperatura"]
   const ida= req.query.ida;
   const namep= namePs[req.query.param];
   db.query(
@@ -434,7 +448,7 @@ app.get("/aquariumParameter", (req, res) => {
     console.log(req.body);
     const quantityP  = req.body.quantityP;
     const ida= req.body.IDA;
-    const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH"]
+    const namePs = ["Ph","Nitrato","Nitrito","Cloro","Amónia","GH","KH","Temperatura"]
     const nameP = namePs[req.body.nameP];
     console.log(req.session.user)
     db.query(
@@ -463,6 +477,19 @@ app.get("/alerts", (req, res) => {
           res.send(result);
       })
   }); 
+
+  app.get("/alertSum", (req, res) => {
+    const ida= req.query.ida;
+      db.query(
+          "SELECT COUNT(IDL) as alertTotal FROM alert WHERE IDA=?", 
+          ida, 
+          (err, result) => {
+              if (err) {
+                  throw err;
+              }
+              res.send(result[0]);
+          })
+      });
 
 /* Alert  API END*/
 

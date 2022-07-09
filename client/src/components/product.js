@@ -36,13 +36,13 @@ function Product(props) {
           </Modal.Body>
       </Modal>
 
-<Card style={{ width: '18rem' }}>
-  <Button onClick={handleShow}>-</Button>
-  <Card.Img variant="top" src={"http://localhost:3001/productImgPreview?productid="+props.idd} />
-  <Card.Body>
-    <Card.Title>{props.name}</Card.Title>
-  </Card.Body>
-</Card>
+              <Card  id='cardAquaInfo4'>
+                <Card.Body>
+                      <button className='botao2' id="botao5"  onClick={handleShow}>-</button>
+                      <Card.Img  id="imgFish"  src={"http://localhost:3001/productImgPreview?productid="+props.idd} />
+                      <div  id="cardFish1">Nome:{props.name} Quat:{props.quantityD}</div>
+                  </Card.Body>
+              </Card>
 </>
   )
 }

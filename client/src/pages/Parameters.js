@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import{useNavigate,useParams} from "react-router-dom";
-import { Navbar, Button, Form, Modal,Container,Row,Col, ListGroup, ListGroupItem, Placeholder } from 'react-bootstrap';
+import { Card, Button, Form, Modal,Row,Col, ListGroup, ListGroupItem, Placeholder } from 'react-bootstrap';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import  Axios  from 'axios';
+import NavBarOn from '../components/navBarOn';
+import Footer from '../components/footer';
 
 function Parameters() {
     const handleClose = () => {setparamPos(0);setShow(false);}
@@ -74,6 +76,11 @@ function Parameters() {
             max:140,
             unit: "ppm"
          },
+         {
+          min:23, 
+          max:28,
+          unit: "ºC"
+        },
         ]
 
 
@@ -82,7 +89,7 @@ function Parameters() {
 <>
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicionar Peixe</Modal.Title>
+          <Modal.Title>Adicionar parametro</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -95,12 +102,15 @@ function Parameters() {
             <option value="4">Amónia</option>
             <option value="5">GH</option>
             <option value="6">KH</option>
+            <option value="7">Temperatura</option>
           </Form.Select>  
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Novo valor a introduzir</Form.Label>
               <Form.Control
-                type="name"
+                type="number"
                 autoFocus 
+                required
+                value={parameterReg}
                 onChange={(e)=> {
                     setparameterReg(e.target.value)
                 }}
@@ -112,60 +122,108 @@ function Parameters() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={parameters}>
+          <Button disabled={parameterReg === ""} variant="primary" onClick={parameters}>
             Salvar
           </Button>
         </Modal.Footer>
       </Modal>
 
         <div>
-            <Container>
-      <Row><Col><Navbar bg="dark" variant="dark">
-        <Container>
-        <Navbar.Brand href="/">Fish20</Navbar.Brand>
-          <Button className="buttonHomepage" onClick={ () => {
-                    navigate('/login');
-                }}>
-                    Login</Button>
-        </Container>
-      </Navbar></Col></Row>
+        <NavBarOn/>
      
-      <Row><Col><Button className='rounded' onClick={handleShow}>+</Button>
+      <Row>
+        <Col className='col-5' id="cardParameters2">
+          <Card id="cardParameters1">
+            <Card.Title>
+              <div className='textParameters'>Parametros</div> <button className='botao2' id="botao4" onClick={handleShow}>Adicionar Parametro +</button>
+            </Card.Title>
+          </Card>
 
-        <ListGroup>
-            <ListGroup.Item>Ph <Button onClick={()=>changeParameter(0)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>Nitrato<Button onClick={()=>changeParameter(1)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>Nitrito<Button onClick={()=>changeParameter(2)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>Cloro <Button onClick={()=>changeParameter(3)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>Amónia <Button onClick={()=>changeParameter(4)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>GH <Button onClick={()=>changeParameter(5)}>^</Button></ListGroup.Item>
-            <ListGroup.Item>KH <Button onClick={()=>changeParameter(6)}>^</Button></ListGroup.Item>
-        </ListGroup></Col>
-    <Col>
-        <Row><Col>
-        
-        <AreaChart
-          width={500}
-          height={400}
-          data={data}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="datep" />
-          <YAxis />
-          <Tooltip />
-          <Area type="monotone" dataKey="quantityP" stroke="#8884d8" fill="#8884d8" />
-        </AreaChart>
-        <Row><Col>min {minMaxes[currentParameter].min + " " + minMaxes[currentParameter].unit}</Col><Col>max {minMaxes[currentParameter].max + " " + minMaxes[currentParameter].unit}</Col></Row>
-        </Col></Row>
+            <ListGroup>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Ph</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(0)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Nitrato</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(1)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Nitrito</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(2)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Cloro</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(3)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Amónia</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(4)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>GH</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(5)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>KH</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(6)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+
+                <ListGroup.Item id="cardParameters3">
+                  <Card.Title>
+                    <Card border='0'>
+                    <div className='textParameters1'>Temperatura</div> <button className='botao2' id="botaoParameters" onClick={()=>changeParameter(7)}>^</button>
+                    </Card>
+                    </Card.Title>
+                </ListGroup.Item>
+            </ListGroup>
         </Col>
-        </Row>
-      </Container>
+
+        <Col>
+          <AreaChart id="graphs"
+            width={800}
+            height={500}
+            data={data}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="datep" />
+            <YAxis />
+            <Tooltip />
+            <Area type="monotone" dataKey="quantityP" stroke="#e20c0c" fill="rgb(108,212,202)" />
+          </AreaChart>
+          <div className='Min'>min {minMaxes[currentParameter].min + " " + minMaxes[currentParameter].unit}</div>
+          <div className='Max'>max {minMaxes[currentParameter].max + " " + minMaxes[currentParameter].unit}</div>
+        </Col>
+      </Row>
+      <Footer/>
         </div>
         </>
     )

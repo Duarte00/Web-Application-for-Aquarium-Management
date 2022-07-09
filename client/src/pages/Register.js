@@ -29,12 +29,16 @@ function Register() {
             <form className="p-3 mt-3">
                 <div className="form-field d-flex align-items-center"> <span className="far fa-user"></span> 
                 <input type="text" placeholder="username" 
+                required
+                file={usernameReg}
               onChange={(e)=> {
                 setUsernameReg(e.target.value)
                 }}/> </div>
 
                 <div className="form-field d-flex align-items-center"> <span className="fas fa-key"></span> 
                 <input type="password" placeholder="password"
+                required
+                file={passwordReg}
               onChange={(e)=> {
                 setpasswordReg(e.target.value)
                 }}/> </div> 
@@ -44,7 +48,7 @@ function Register() {
               onChange={(e)=> {
                 setemailReg(e.target.value)
                 }}/> </div> 
-                <button className="btn mt-3" onClick={register}>Register</button>
+                <button className="btn mt-3" disabled={usernameReg === "" || passwordReg === ""} onClick={register}>Register</button>
             </form>
         </div>
 

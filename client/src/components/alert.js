@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListGroupItem } from 'react-bootstrap';
+import { ListGroupItem,Card } from 'react-bootstrap';
 
 let dict= {
   Ph: "Ph fora dos parâmetros, ver página informativa",
@@ -8,18 +8,23 @@ let dict= {
   Cloro : "Níveis de cloro elevadoS, ver página informativa",
   Amónia : "Níveis de amónia elevadoS, ver página informativa",
   GH : "Gh fora dos parâmetros, ver página informativa",
-  KH : "Kh fora dos parâmetros, ver página informativa"
+  KH : "Kh fora dos parâmetros, ver página informativa",
+  Temperatura : "Temperatura fora dos parâmetros, ver página informativa"
 }
 
 function Alert(props) {
   return (
-    <ListGroupItem>
-      <a>{props.name+ " "}</a>
-      {props.date.split("T")[0].split("-")[2]+"-"+props.date.split("T")[0].split("-")[1]
-      +"-"+props.date.split("T")[0].split("-")[0]+" "
-      + props.date.split("T")[1].split("Z")[0].split(".")[0]}
-      <p>{dict[props.typeA]}</p>
-    </ListGroupItem>
+
+          <Card border='0' id="cardAlert">
+            <Card.Title >
+              <div className='textAlert1'>Aquario: {props.name+ " "}</div>
+              <div className='textAlert3'>Data: {props.date.split("T")[0].split("-")[2]+"-"+props.date.split("T")[0].split("-")[1]
+              +"-"+props.date.split("T")[0].split("-")[0]+" "
+              + props.date.split("T")[1].split("Z")[0].split(".")[0]}</div> 
+              <div className='textAlert2' ><p>Alerta: {dict[props.typeA]}</p></div>
+              </Card.Title>
+          </Card>
+      
   )
 }
 

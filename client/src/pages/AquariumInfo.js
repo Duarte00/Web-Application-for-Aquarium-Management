@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import{useNavigate,useParams} from "react-router-dom";
-import { Container,Row,Col, Navbar, Button, Modal } from 'react-bootstrap';
+import { Container,Row,Col, Card, Button, Modal } from 'react-bootstrap';
 import Aquarium from '../components/aquarium';
 import  Axios  from 'axios';
+import NavBarOn from '../components/navBarOn';
+import Footer from '../components/footer';
 
 function AquariumInfo() {
   let navigate = useNavigate();
@@ -11,6 +13,9 @@ function AquariumInfo() {
   const [aquarium,setAquarium] =useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [sumFishes,setsumFishes] =useState(0);
+  const [sumAlerts,setsumAlerts] =useState(0);
+  
   const getAquarium=()=>{
     Axios.get('http://localhost:3001/userAquarium?ida='+ida,{
   withCredentials: true,
@@ -32,8 +37,29 @@ function AquariumInfo() {
   })
 }
 
+  const sumFish=()=>{
+    Axios.get('http://localhost:3001/fishesSum?ida='+ida,{
+  withCredentials: true,
+  baseURL: "http://localhost:3001/",
+  }).then((respose) => {
+    setsumFishes(respose.data.fishTotal);
+  })
+  }
+
+  const sumAlert=()=>{
+    Axios.get('http://localhost:3001/alertSum?ida='+ida,{
+  withCredentials: true,
+  baseURL: "http://localhost:3001/",
+  }).then((respose) => {
+    setsumAlerts(respose.data.alertTotal);
+  })
+  }
+
+
   useEffect(()=>{
     getAquarium();
+    sumFish();
+    sumAlert();
   },[])
 
   const [userAquariums,setUserAquariums] =useState([]);
@@ -55,26 +81,59 @@ function AquariumInfo() {
       </Modal>
 
     <div>
-      <Container>
-      <Row><Col>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-        <Navbar.Brand href="/">Fish20</Navbar.Brand>
-          <Button className="buttonHomepage" onClick={ () => {
-                    navigate('/login');
-                }}>
-                    Login</Button>
-        </Container>
-      </Navbar></Col></Row>
-        <Row><Col>
-      {aquarium!==null ?aquarium.map((uf, index) => (
-                <Col><Button onClick={handleShow}>-</Button><Aquarium name={uf.name} id={uf.IDA}/></Col>
+    <NavBarOn/>
+      <Row>
+
+          <Col  className='col-5'>
+                {aquarium!==null ?aquarium.map((uf, index) => (
+                <Col className='conatinerAquaInfo1'><button className='botao2' id="botao5" onClick={handleShow}>-</button>
+                <Aquarium dimension={uf.dimension} name={uf.name} id={uf.IDA}/></Col>
               )) : <h1>Loading...</h1>}
-      </Col><Col></Col><Col>
-      <Button onClick={()=>navigate("fishes")} >adicionar peixes +</Button>
-      <Button onClick={()=>navigate("products")} >adicionar produtos +</Button>
-      <Button onClick={()=>navigate("parameters")} >adicionar parametros +</Button></Col></Row>
-      </Container>
+          </Col>
+      
+        <Col>
+          <Row>
+              <Card  id='cardAquaInfo1'>
+                <Card.Body  className=''>
+                      <Card.Title><div className='cardAquaInfo2'>Peixes</div> <button className='botao2' id="botao3" 
+                      onClick={()=>navigate("fishes")}>+</button> </Card.Title>
+                      <div className='cardAquaInfo2' id="cardAquaInfo3">{sumFishes} peixes </div>
+                  </Card.Body>
+              </Card>
+
+              <Card  id='cardAquaInfo1'>
+                <Card.Body  className=''>
+                      <Card.Title><div className='cardAquaInfo2'>Alertas</div> <button className='botao2' id="botao3" 
+                      onClick={()=>navigate('/AquariumInfo/alerts/')}>+</button> </Card.Title>
+                      <div className='cardAquaInfo2' id="cardAquaInfo3">{sumAlerts} alertas</div>
+                  </Card.Body>
+              </Card>
+           </Row>
+          
+          <Row>
+            
+              <Card  id='cardAquaInfo1'>
+                  <Card.Body  className=''>
+                        <Card.Title><div className='cardAquaInfo2'>Produtos</div> <button className='botao2' id="botao3" 
+                        onClick={()=>navigate("products")}>+</button> </Card.Title>
+                        <div className='cardAquaInfo2' id="cardAquaInfo3"> produtos</div>
+                    </Card.Body>
+                </Card>
+            
+
+           
+                  <Card  id='cardAquaInfo1'>
+                      <Card.Body  className=''>
+                            <Card.Title><div className='cardAquaInfo2' id='cardAquaInfo5'>Parametros</div> <button className='botao2' id="botao3" 
+                            onClick={()=>navigate("parameters")}>+</button> </Card.Title>
+                            <div className='cardAquaInfo2' id="cardAquaInfo3">parametros</div>
+                        </Card.Body>
+                    </Card>
+            
+          </Row>
+        </Col>
+      </Row>
+
       </div>
       </>
   )

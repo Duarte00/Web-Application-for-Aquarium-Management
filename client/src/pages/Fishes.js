@@ -3,6 +3,9 @@ import{useNavigate,useParams} from "react-router-dom";
 import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
 import Fish from '../components/fish';
 import  Axios  from 'axios';
+import NavBarOn from '../components/navBarOn';
+import Footer from '../components/footer';
+
 function Fishes() {
     let navigate = useNavigate();
     const {ida}=useParams();
@@ -61,6 +64,8 @@ const getFishes=()=>{
               <Form.Control
                 type="name"
                 autoFocus 
+                required
+                value={fishnameReg}
                 onChange={(e)=> {
                     setFishnameReg(e.target.value)
                 }}
@@ -71,6 +76,8 @@ const getFishes=()=>{
               <Form.Control
                 type="numerical"
                 autoFocus
+                required
+                value={fishQuantReg}
                 onChange={(e)=> {
                     setFshReg(e.target.value)
                   }}
@@ -81,6 +88,8 @@ const getFishes=()=>{
               <Form.Control
                 type="file"
                 name="uploaded_file"
+                required
+                file={fishImg}
                 onChange={ (e)=> setFishImg(e.target.files[0])}
               />
             </Form.Group>
@@ -90,7 +99,7 @@ const getFishes=()=>{
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={fishes}>
+          <Button disabled={fishnameReg === "" || fishQuantReg === "" || fishImg === null} variant="primary" onClick={fishes}>
             Salvar
           </Button>
         </Modal.Footer>
@@ -98,22 +107,19 @@ const getFishes=()=>{
 
 
     <div>
-      <Container>
-      <Row><Col><Navbar bg="dark" variant="dark">
-        <Container>
-        <Navbar.Brand href="/">Fish20</Navbar.Brand>
-          <Button className="buttonHomepage" onClick={ () => {
-                    navigate('/login');
-                }}>
-                    Login</Button>
-        </Container>
-      </Navbar></Col></Row>
-        <Row><Button className='rounded' onClick={handleShow}>+</Button><Col>
-      {aquaFishes.length>0 ?aquaFishes.map((uf, index) => (
-                <Col><Fish idf={uf.IDF} name={uf.name}/></Col>
+      
+      <NavBarOn/>
+        <Row md={4}>
+        <Col><button className='button-24' onClick={handleShow}>+</button></Col>
+
+      {aquaFishes.length>0 ?aquaFishes.map((uf, index) => (        
+                <Col id="containerFish">
+                  <Fish idf={uf.IDF} name={uf.species} quantityF={uf.quantityF} />
+                </Col>
               )) : (<h1>Loading...</h1>)}
-      </Col><Col></Col><Col></Col></Row>
-      </Container>
+        </Row>
+
+      
       </div>
       </>
   )

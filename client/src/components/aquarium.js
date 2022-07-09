@@ -7,12 +7,12 @@ function Aquarium(props) {
   const navigate=useNavigate();
 
   return (
-<Card style={{ width: '18rem' }} onClick={()=>navigate("/AquariumInfo/"+props.id)}>
+<Card border='0' style={{ width: '20rem' }} onClick={()=>navigate("/AquariumInfo/"+props.id)}>
 
   <Card.Img variant="top" src={"http://localhost:3001/aquaImgPreview?aquaid="+props.id} />
   <Card.Body>
-    <Card.Title>{props.name}</Card.Title>
-    
+    <div className='textAquainfo1'>Dimensão: {props.dimension}L</div>
+    <Card.Title className='textAquainfo1'>{props.name}</Card.Title>
   </Card.Body>
 </Card>
   )

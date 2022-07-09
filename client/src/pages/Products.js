@@ -3,6 +3,9 @@ import{useNavigate,useParams} from "react-router-dom";
 import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
 import Product from '../components/product';
 import  Axios  from 'axios';
+import NavBarOn from '../components/navBarOn';
+import Footer from '../components/footer';
+
 function Products() {
     let navigate = useNavigate();
     const {ida}=useParams();
@@ -61,6 +64,8 @@ const getProducts=()=>{
               <Form.Control
                 type="name"
                 autoFocus 
+                required
+                value={productnameReg}
                 onChange={(e)=> {
                     setproductnameReg(e.target.value)
                 }}
@@ -69,7 +74,10 @@ const getProducts=()=>{
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Quantidade</Form.Label>
               <Form.Control
+                type="name"
                 autoFocus
+                required
+                value={productQuantReg}
                 onChange={(e)=> {
                     setProductQuantReg(e.target.value)
                   }}
@@ -80,6 +88,8 @@ const getProducts=()=>{
               <Form.Control
                 type="file"
                 name="uploaded_file"
+                required
+                file={productImg}
                 onChange={ (e)=> setproductImg(e.target.files[0])}
               />
             </Form.Group>
@@ -89,7 +99,7 @@ const getProducts=()=>{
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={products}>
+          <Button disabled={productnameReg === "" || productQuantReg === "" || productImg === null} variant="primary" onClick={products}>
             Salvar
           </Button>
         </Modal.Footer>
@@ -97,22 +107,18 @@ const getProducts=()=>{
       
 
     <div>
-      <Container>
-      <Row><Col><Navbar bg="dark" variant="dark">
-        <Container>
-        <Navbar.Brand href="/">Fish20</Navbar.Brand>
-          <Button className="buttonHomepage" onClick={ () => {
-                    navigate('/login');
-                }}>
-                    Login</Button>
-        </Container>
-      </Navbar></Col></Row>
-        <Row><Button className='rounded' onClick={handleShow}>+</Button><Col>
-      {aquaProducts.length>0 ?aquaProducts.map((uf, index) => (
-                <Col><Product idd={uf.IDD} name={uf.typeD}/></Col>
+
+    <NavBarOn/>
+        <Row md={4}>
+        <Col><button className='button-24' onClick={handleShow}>+</button></Col>
+
+        {aquaProducts.length>0 ?aquaProducts.map((uf, index) => (       
+                <Col id="containerFish">
+                  <Product idd={uf.IDD} name={uf.typeD} quantityD={uf.quantityD} />
+                </Col>
               )) : (<h1>Loading...</h1>)}
-      </Col><Col></Col><Col></Col></Row>
-      </Container>
+        </Row>
+
       </div>
       </>
   )
