@@ -34,7 +34,8 @@ function Alerts() {
           
             <Card >
               <Card.Title>
-                <div  className="textAlert4">Alertas</div> <button className='botao2' id="botaoAlert">Resolver alerta +</button>
+                <div  className="textAlert4">Alertas</div> <button onClick={ () => {
+                    navigate('/');}} className='botao2' id="botaoAlert">Resolver alerta +</button>
               </Card.Title>
             </Card>
           
@@ -43,7 +44,7 @@ function Alerts() {
               <Col id="cardParameters2"> 
                   <Alert name={uf.name} date={uf.dateA} typeA={uf.typeA}/>
               </Col>
-              )) : (<h1>Loading...</h1>)}
+              )) : (<h1 className='textLoad'>Sem Alertas :)</h1>)}
           </ListGroup> 
         </Row>
       <Footer/>

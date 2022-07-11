@@ -37,8 +37,8 @@ function Product(props) {
       </Modal>
 
               <Card  id='cardAquaInfo4'>
+              <button className='botao2' id="botaoFish1"  onClick={handleShow}>-</button>
                 <Card.Body>
-                      <button className='botao2' id="botao5"  onClick={handleShow}>-</button>
                       <Card.Img  id="imgFish"  src={"http://localhost:3001/productImgPreview?productid="+props.idd} />
                       <div  id="cardFish1">Nome:{props.name} Quat:{props.quantityD}</div>
                   </Card.Body>

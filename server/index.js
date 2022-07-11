@@ -426,6 +426,19 @@ app.get("/aquariumProduct", (req, res) => {
               })
           });
 
+          app.get("/productSum", (req, res) => {
+            const ida= req.query.ida;
+              db.query(
+                  "SELECT sum(quantityD) as productTotal FROM products WHERE IDA=?", 
+                  ida, 
+                  (err, result) => {
+                      if (err) {
+                          throw err;
+                      }
+                      res.send(result[0]);
+                  })
+              });
+
 /* Product  API END*/
 
 /* Parameter API*/

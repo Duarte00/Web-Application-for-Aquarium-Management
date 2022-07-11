@@ -76,7 +76,7 @@ function Profile() {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Dimensão em litros</Form.Label>
               <Form.Control
-                type="numerical"
+                type="number"
                 autoFocus
                 required
                 value={dimensionReg}
@@ -117,10 +117,10 @@ function Profile() {
         <Row md={4}>
         <Col><button className='button-24' onClick={handleShow}>+</button></Col>
           {userAquariums.length>0  ?userAquariums.map((uf, index) => (
-            <Col id="containerFish">
+            <Col id="containerAqua">
                   <Aquarium dimension={uf.dimension} name={uf.name} id={uf.IDA}/>
             </Col>
-                )) : (<h1>No Aquariums</h1>)}
+                )) : (<h1 className='textLoad'>Sem Aquários :(</h1>)}
         </Row>
 
     </>

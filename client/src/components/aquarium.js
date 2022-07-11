@@ -8,9 +8,8 @@ function Aquarium(props) {
 
   return (
 <Card border='0' style={{ width: '20rem' }} onClick={()=>navigate("/AquariumInfo/"+props.id)}>
-
-  <Card.Img variant="top" src={"http://localhost:3001/aquaImgPreview?aquaid="+props.id} />
   <Card.Body>
+    <Card.Img id="imgAqua" src={"http://localhost:3001/aquaImgPreview?aquaid="+props.id} />
     <div className='textAquainfo1'>Dimensão: {props.dimension}L</div>
     <Card.Title className='textAquainfo1'>{props.name}</Card.Title>
   </Card.Body>

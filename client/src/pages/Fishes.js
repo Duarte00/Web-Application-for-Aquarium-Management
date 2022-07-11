@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import{useNavigate,useParams} from "react-router-dom";
-import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
+import { Card, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
 import Fish from '../components/fish';
 import  Axios  from 'axios';
 import NavBarOn from '../components/navBarOn';
@@ -74,7 +74,7 @@ const getFishes=()=>{
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Quantidade</Form.Label>
               <Form.Control
-                type="numerical"
+                type="number"
                 autoFocus
                 required
                 value={fishQuantReg}
@@ -109,14 +109,21 @@ const getFishes=()=>{
     <div>
       
       <NavBarOn/>
-        <Row md={4}>
-        <Col><button className='button-24' onClick={handleShow}>+</button></Col>
+       
+        <Row  id="cardParameters2">
+            <Card id="cardFish">
+              <Card.Title>
+                <div className='textFish'>Peixes</div> <button className='botao2' id="botaoFish" onClick={handleShow}>Adicionar Peixes +</button>
+              </Card.Title>
+            </Card>
+        </Row>
 
+        <Row md={4}>
       {aquaFishes.length>0 ?aquaFishes.map((uf, index) => (        
                 <Col id="containerFish">
                   <Fish idf={uf.IDF} name={uf.species} quantityF={uf.quantityF} />
                 </Col>
-              )) : (<h1>Loading...</h1>)}
+              )) : (<h1 className='textLoad'>Sem Peixes :(</h1>)}
         </Row>
 
       

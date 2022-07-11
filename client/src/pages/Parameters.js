@@ -89,11 +89,11 @@ function Parameters() {
 <>
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicionar parametro</Modal.Title>
+          <Modal.Title>Adicionar parâmetros </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-          <Form.Label>Selecionar parametro</Form.Label>
+          <Form.Label>Selecionar parâmetros</Form.Label>
           <Form.Select onChange={(e)=>setparamPos(e.target.value)} aria-label="Default select example" >
             <option value="0">Ph</option>
             <option value="1">Nitrato</option>
@@ -135,7 +135,7 @@ function Parameters() {
         <Col className='col-5' id="cardParameters2">
           <Card id="cardParameters1">
             <Card.Title>
-              <div className='textParameters'>Parametros</div> <button className='botao2' id="botao4" onClick={handleShow}>Adicionar Parametro +</button>
+              <div className='textParameters'>Parâmetros</div> <button className='botao2' id="botao4" onClick={handleShow}>Adicionar parâmetros +</button>
             </Card.Title>
           </Card>
 

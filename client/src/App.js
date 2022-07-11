@@ -15,6 +15,7 @@ import Parameters from './pages/Parameters'
 import Alerts from './pages/Alerts';
 import Cycle from './pages/Cycle';
 import Diseases from './pages/Diseases';
+import Water from './pages/Water';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='*' element={<ErrorPage />}/>
         <Route path='/cycle' element={<Cycle/>} />
         <Route path='/diseases' element={<Diseases/>} />
+        <Route path='/water' element={<Water/>} />
     </Routes>
   </Router>
   </div>

@@ -52,6 +52,16 @@
   position: left;
 }
 
+#logoNav{
+  height: 60px;
+  margin-left: 50%;
+}
+
+#logoNav2{
+  height: 7em;
+  margin-left: 25%;
+  margin-top: 6.5em;
+}
 /* Login page */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
@@ -161,6 +171,7 @@ body {
 .navBarColor{
   background: rgb(108,212,202);
 background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgba(68,161,152,0.8186624991793592) 100%);
+height: 90px;
 }
 /* Nabar END*/
 
@@ -343,7 +354,7 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   .button-24:active {
     background-color: initial;
     background-position: 0 0;
-    color: #FFFFFF;
+    color: #6CD4CA;
   }
   
   .button-24:active {
@@ -364,6 +375,11 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   width: 100%;
 }
 
+.img4{
+  height:35em;
+  border-radius: -25px;
+}
+
 .textHome1{
   color:#FFFFFF;
   display: flex;
@@ -382,9 +398,9 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   justify-content: center;
   position: absolute;
   left: 51%;
-  top: 55%;
+  top: 65%;
   transform: translate(-50%, -50%);
-  font-size:18px;
+  font-size:20px;
 }
 
 .textHome3{
@@ -392,11 +408,11 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   display: flex;
   justify-content: center;
   position: absolute;
-  left: 45%;
-  top: 40%;
-  transform: translate(-50%, -50%);
+  left: 30%;
+  top: 30%;
   font-size:30px;
- 
+  margin-right: 30%;
+
 }
 
 .textHome4{
@@ -404,10 +420,11 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   display: flex;
   justify-content: center;
   position: absolute;
-  left: 36%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: 15%;
+  margin-right: 15%;
+  top: 45%;
   font-size:18px;
+  text-align: justify;
 }
 
 .cardHome1{
@@ -560,9 +577,7 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   margin-top: 20%;
 }
 
-.textAquainfo1{
-  text-align: center;
-}
+
 
 .botao2 {
   background: #6CD4CA;
@@ -656,6 +671,21 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   margin-top:-70px;
 }
 
+#containerAqua{
+  display: flex;
+  height: 18em;
+  flex-wrap: wrap;
+  margin-top: 3em;
+  margin-left: -2em;
+  margin-right: 1em;
+}
+
+#imgAqua{
+  height:18em;
+  width: auto;
+  border-radius: 25px;
+}
+
 /* AquariumInfo page END*/
 
 /* Fish page*/
@@ -686,10 +716,59 @@ background: linear-gradient(329deg, rgba(108,212,202,0.7822479333530288) 0%, rgb
   width:400px;
   height: 400px;
   flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #imgFish{
   height:200px;
+  margin-top: -0.5em;
+  border-radius: 25px;
+}
+
+.textLoad{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#cardFish{
+  width: 90%;
+  height: 80px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-radius: 15px;
+  background-color: #ffffff;
+  border-width: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textFish{
+  margin-top:1em;
+  font-size:25px;
+  margin-left: 2em;
+}
+
+#botaoFish{
+  margin-left: 10em;
+  margin-top:-50px;
+  border-radius: 15px;
+}
+
+#botaoFish1 {
+  background: #e20c0c;
+  border: 1px solid #e20c0c;
+  color: #FFFFFF;
+  width: 2.5em;
+  margin-top: 0.5em;
+  margin-left: 1em;
+}
+
+#botaoFish1:hover,
+#botaoFish1:active {
+  background-color: #FFFFFF;
+  background-position: 0 0;
+  color: #e20c0c;
 }
 /* Fish page END*/
 

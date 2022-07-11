@@ -15,6 +15,7 @@ function AquariumInfo() {
   const handleShow = () => setShow(true);
   const [sumFishes,setsumFishes] =useState(0);
   const [sumAlerts,setsumAlerts] =useState(0);
+  const [sumProducts,setsumProducts] =useState(0);
   
   const getAquarium=()=>{
     Axios.get('http://localhost:3001/userAquarium?ida='+ida,{
@@ -55,11 +56,22 @@ function AquariumInfo() {
   })
   }
 
+  const sumProduct=()=>{
+    Axios.get('http://localhost:3001/productSum?ida='+ida,{
+  withCredentials: true,
+  baseURL: "http://localhost:3001/",
+  }).then((respose) => {
+    setsumProducts(respose.data.productTotal);
+  })
+  }
+
+
 
   useEffect(()=>{
     getAquarium();
     sumFish();
     sumAlert();
+    sumProduct();
   },[])
 
   const [userAquariums,setUserAquariums] =useState([]);
@@ -116,7 +128,7 @@ function AquariumInfo() {
                   <Card.Body  className=''>
                         <Card.Title><div className='cardAquaInfo2'>Produtos</div> <button className='botao2' id="botao3" 
                         onClick={()=>navigate("products")}>+</button> </Card.Title>
-                        <div className='cardAquaInfo2' id="cardAquaInfo3"> produtos</div>
+                        <div className='cardAquaInfo2' id="cardAquaInfo3">{sumProducts} produtos</div>
                     </Card.Body>
                 </Card>
             
@@ -124,9 +136,9 @@ function AquariumInfo() {
            
                   <Card  id='cardAquaInfo1'>
                       <Card.Body  className=''>
-                            <Card.Title><div className='cardAquaInfo2' id='cardAquaInfo5'>Parametros</div> <button className='botao2' id="botao3" 
+                            <Card.Title><div className='cardAquaInfo2' id='cardAquaInfo5'>Parâmetros </div> <button className='botao2' id="botao3" 
                             onClick={()=>navigate("parameters")}>+</button> </Card.Title>
-                            <div className='cardAquaInfo2' id="cardAquaInfo3">parametros</div>
+                            <div className='cardAquaInfo2' id="cardAquaInfo3">8 parâmetros </div>
                         </Card.Body>
                     </Card>
             

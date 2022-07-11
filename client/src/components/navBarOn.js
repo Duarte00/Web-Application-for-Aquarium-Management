@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import{useNavigate} from "react-router-dom";
-import {Navbar, Nav, Container, } from 'react-bootstrap';
+import {Image, Navbar, Nav, Container, } from 'react-bootstrap';
 import Axios from "axios"
 
 function NavBarOn(props) {
@@ -48,7 +48,7 @@ function NavBarOn(props) {
             </div>
           <Container>
           <Nav className="me-auto">
-          <Navbar.Brand href="/">Fish20</Navbar.Brand>
+          <a href="/"><Image id='logoNav' src={require('../img/23.png')} /></a>
           </Nav>
           </Container>
           

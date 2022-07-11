@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import{useNavigate,useParams} from "react-router-dom";
-import { Navbar, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
+import { Card, Button, Form, Modal,Container,Row,Col } from 'react-bootstrap';
 import Product from '../components/product';
 import  Axios  from 'axios';
 import NavBarOn from '../components/navBarOn';
@@ -74,7 +74,7 @@ const getProducts=()=>{
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Quantidade</Form.Label>
               <Form.Control
-                type="name"
+                type="number"
                 autoFocus
                 required
                 value={productQuantReg}
@@ -109,14 +109,21 @@ const getProducts=()=>{
     <div>
 
     <NavBarOn/>
+        
+        <Row  id="cardParameters2">
+            <Card id="cardFish">
+              <Card.Title>
+                <div className='textFish'>Produtos</div> <button className='botao2' id="botaoFish" onClick={handleShow}>Adicionar Produto +</button>
+              </Card.Title>
+            </Card>
+        </Row>
+        
         <Row md={4}>
-        <Col><button className='button-24' onClick={handleShow}>+</button></Col>
-
         {aquaProducts.length>0 ?aquaProducts.map((uf, index) => (       
                 <Col id="containerFish">
                   <Product idd={uf.IDD} name={uf.typeD} quantityD={uf.quantityD} />
                 </Col>
-              )) : (<h1>Loading...</h1>)}
+              )) : (<h1 className='textLoad'>Sem Produtos :(</h1>)}
         </Row>
 
       </div>

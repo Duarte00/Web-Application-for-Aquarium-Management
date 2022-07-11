@@ -36,8 +36,8 @@ function Fish(props) {
       </Modal>
 
               <Card  id='cardAquaInfo4'>
+                <button className='botao2' id="botaoFish1"  onClick={handleShow}>-</button>
                 <Card.Body>
-                      <button className='botao2' id="botao5"  onClick={handleShow}>-</button>
                       <Card.Img  id="imgFish"  src={"http://localhost:3001/fishImgPreview?fishid="+props.idf} />
                       <div  id="cardFish1">Nome:{props.name} Quat:{props.quantityF}</div>
                   </Card.Body>
